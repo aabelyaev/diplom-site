@@ -72,7 +72,7 @@ jobs:
         if: env.DEPLOY == 'false'
        
         run: |
-          sed -i "s|image: aabelyaev/diplom-site:.*|image: ${{ env.IMAGE_TAG }}|" ./k8s/deployment.yaml ./k8s/service.yaml
+          sed -i "s|image: aabelyaev/diplom-site:.*|image: ${{ env.IMAGE_TAG }}|" ./kub-site/deployment.yaml ./kub-site/service.yaml
         env:
           IMAGE_TAG: aabelyaev/diplom-site:${{ env.VERSION }}
       
