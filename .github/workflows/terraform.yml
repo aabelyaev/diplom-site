@@ -72,7 +72,7 @@ jobs:
         if: env.DEPLOY == 'false'
        
         run: |
-          sed -i "s|image: lotsmansm/diplom-test-site:.*|image: ${{ env.IMAGE_TAG }}|" ./kub-site/deployment.yaml ./kub-site/service.yaml
+          sed -i "s|image: lotsmansm/diplom-test-site:.*|image: ${{ env.IMAGE_TAG }}|" ./k8s/deployment.yaml ./k8s/service.yaml
         env:
           IMAGE_TAG: lotsmansm/diplom-test-site:${{ env.VERSION }}
       
@@ -86,5 +86,5 @@ jobs:
           echo "${KUBE_CONFIG_DATA}" > ${HOME}/.kube/config
       - name: Apply Kubernetes manifests
         run: |
-          kubectl apply -f ./kub-site/deployment.yaml
-          kubectl apply -f ./kub-site/service.yaml
+          kubectl apply -f ./k8s/deployment.yaml
+          kubectl apply -f ./k8s/service.yaml
