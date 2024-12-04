@@ -1,0 +1,30 @@
+name: k8s
+run-name: Deploy "${{ github.ref_name }}" 🚀
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Werf init
+        uses: werf/actions/install@v2
+
+      - name: Werf deploy
+        run: |
+          source "$(werf ci-env github --as-file)"
+          werf cr
+          werf converge
+        env:
+          WERF_KUBECONFIG_BASE64: ${{ secrets.KUBECONFIG_BASE64 }}
+          WERF_REPO: ${{ vars.YCR_REPO }}
+          WERF_PASSWORD: ${{ secrets.YCR_KEY }}
+          WERF_USERNAME: ${{ secrets.YCR_USER }}
+          WERF_ENV: prod
+          WERF_ADD_CUSTOM_TAG_1: "${{ github.ref_name }}"

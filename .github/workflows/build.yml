@@ -1,0 +1,27 @@
+name: k8s
+on:
+  push:
+    branches:
+      - '**'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Werf init
+        uses: werf/actions/install@v2
+
+      - name: Werf build
+        run: |
+          source "$(werf ci-env github --as-file)"
+          werf cr
+          werf build
+        env:
+          WERF_KUBECONFIG_BASE64: ${{ secrets.KUBECONFIG_BASE64 }}
+          WERF_REPO: ${{ vars.YCR_REPO }}
+          WERF_PASSWORD: ${{ secrets.YCR_KEY }}
+          WERF_USERNAME: ${{ secrets.YCR_USER }}
