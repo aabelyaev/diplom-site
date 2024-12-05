@@ -5,7 +5,7 @@
 
  
 Примерный вывод параметров деплоя
-
+```
 name: k8s
 run-name: Deploy "main" 🚀
 on:
@@ -37,6 +37,7 @@ jobs:
           WERF_USERNAME: "username"
           WERF_ENV: prod
           WERF_ADD_CUSTOM_TAG_1: "main"
+```
 
 Параметры деплоя:
 - Время деплоя: 12:00
