@@ -1,0 +1,6 @@
+configVersion: 1
+project: diplom-site
+---
+image: diplom-site
+dockerfile: Dockerfile
+context: ./content
